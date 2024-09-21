@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة كرة السلة للأطفال</title>
+
+    <!-- تنسيق CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #game-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            margin: 50px auto;
+            background-color: #87CEEB;
+            border: 3px solid #000;
+            overflow: hidden;
+        }
+
+        #hoop {
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 30px;
+        }
+
+        #ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: orange;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #score {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>لعبة كرة السلة للأطفال</h1>
+    
+    <div id="game-container">
+        <div id="hoop"></div>
+        <div id="ball"></div>
+    </div>
+
+    <button id="shoot-button">إطلاق!</button>
+
+    <div id="score">النتيجة: 0</div>
+
+    <!-- كود JavaScript -->
+    <script>
+        const ball = document.getElementById('ball');
+        const hoop = document.getElementById('hoop');
+        const button = document.getElementById('shoot-button');
+        const scoreDisplay = document.getElementById('score');
+        let score = 0;
+
+        button.addEventListener('click', () => {
+            // تحريك الكرة لأعلى
+            ball.style.transition = '1s';
+            ball.style.bottom = '400px';
+
+            // التحقق مما إذا كانت الكرة داخل السلة
+            setTimeout(() => {
+                const ballLeft = ball.getBoundingClientRect().left;
+                const hoopLeft = hoop.getBoundingClientRect().left;
+
+                if (Math.abs(ballLeft - hoopLeft) < 30) {
+                    score++;
+                    scoreDisplay.textContent = `النتيجة: ${score}`;
+                    alert('سجلت هدفاً!');
+                } else {
+                    alert('أخطأت! حاول مرة أخرى.');
+                }
+
+                // إعادة الكرة إلى الوضع الأصلي
+                ball.style.transition = '0s';
+                ball.style.bottom = '0';
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
